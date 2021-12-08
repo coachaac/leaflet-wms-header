@@ -2,6 +2,10 @@
 Custom headers on Leaflet TileLayer WMS.
 It's a simple plugin that allow to set custom header for WMS interface.
 
+Added : Custom headers on Leaflet TileLayer.
+It's a simple plugin that allow to set custom header for TileLayer interface.
+I add to remove the "DomEvent.on( ... " stuff. not sure how to add it.
+
 It works with javascript and typescript without any dependencies!
 
 Based on https://github.com/Leaflet/Leaflet/issues/2091#issuecomment-302706529.

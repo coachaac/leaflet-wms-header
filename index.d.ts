@@ -17,5 +17,19 @@ declare module 'leaflet' {
       header: { header: string; value: string }[],
       abort?: Observable<any>
     ): L.TileLayer.WMSHeader;
+    export class TileLayerHeader extends TileLayer {
+      constructor(
+        baseUrl: string,
+        options: TileLayerOptions,
+        header: { header: string; value: string }[],
+        abort?: Observable<any>
+      );
+    }
+    export function Header(
+      baseUrl: string,
+      options: TileLayerOptions,
+      header: { header: string; value: string }[],
+      abort?: Observable<any>
+    ): L.TileLayer.TileLayerHeader;
   }
 }

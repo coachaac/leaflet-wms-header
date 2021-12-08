@@ -1,6 +1,7 @@
 'use strict';
 
 async function fetchImage(url, callback, headers, abort) {
+  console.log("fetching image  : " + url);
   let _headers = {};
   if (headers) {
     headers.forEach(h => {
@@ -54,4 +55,41 @@ L.TileLayer.WMSHeader = L.TileLayer.WMS.extend({
 
 L.TileLayer.wmsHeader = function (url, options, headers, abort) {
   return new L.TileLayer.WMSHeader(url, options, headers, abort);
+};
+
+L.TileLayer.TileLayerHeader = L.TileLayer.extend({
+  initialize: function (url, options, headers, abort) {
+    L.TileLayer.prototype.initialize.call(this, url, options);
+    this.headers = headers;
+    this.abort = abort;
+  },
+  createTile(coords, done) {
+    const url = this.getTileUrl(coords);
+    console.log("URL : " + url);
+		var tile = document.createElement('img');
+
+		if (this.options.crossOrigin || this.options.crossOrigin === '') {
+			tile.crossOrigin = this.options.crossOrigin === true ? '' : this.options.crossOrigin;
+		}
+    tile.setAttribute("role", "presentation");
+
+    fetchImage(
+      url,
+      resp => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          tile.src = reader.result;
+        };
+        reader.readAsDataURL(resp);
+        done(null, tile);
+      },
+      this.headers,
+      this.abort
+    );
+    return tile;
+  }
+});
+
+L.TileLayer.tileLayerHeader = function (url, options, headers, abort) {
+  return new L.TileLayer.TileLayerHeader(url, options, headers, abort);
 };
